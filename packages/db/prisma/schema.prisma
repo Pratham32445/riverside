@@ -20,6 +20,7 @@ model User {
   email                        String         @unique
   password                     String?
   notifications                Notification[]
+  meetings                     Podcast[]
   transcriptionCaptionLanguage Languages      @default(ENGLISH)
   subscription                 PLAN           @default(FREE)
   createdAt                    DateTime       @default(now())
@@ -28,10 +29,12 @@ model User {
 
 model Podcast {
   Id        String    @id @default(uuid())
-  name String
+  name      String
   usersCnt  Int       @default(1)
   message   Message[]
   duration  Int       @default(60)
+  userId    String
+  user      User      @relation(fields: [userId], references: [Id])
   createdAt DateTime  @default(now())
 }
 
